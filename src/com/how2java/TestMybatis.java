@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.how2java.mapper.CategoryMapper;
 import com.how2java.pojo.Category;
 import com.how2java.pojo.Order;
 import com.how2java.pojo.OrderItem;
@@ -23,13 +24,28 @@ public class TestMybatis {
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		SqlSession session = sqlSessionFactory.openSession();
+		CategoryMapper mapper = session.getMapper(CategoryMapper.class);
 		
-		addOrderItem(session);
-		listOrder(session);
-
+		update(mapper);
+		
+//		Map<String, Object> params = new HashMap<>();
+//		params.put("name", "a");
+//		List<Product> ps2 = session.selectList("listProduct", params);
+//		for (Product p : ps2){
+//			System.out.println(p);
+//		}
+		
 		session.commit();
 		session.close();
 	}
+	
+	private static void update(CategoryMapper mapper) {
+		Category c = mapper.get(2);
+		c.setName("category2");
+		mapper.update(c);
+		listAll(mapper);
+	}
+	
 
 	private static void listOrder(SqlSession session) {
 		List<Order> os = session.selectList("listOrder");
@@ -54,4 +70,11 @@ public class TestMybatis {
 		
 		session.insert("addOrderItem", oi);
 	}
+	
+	private static void listAll(CategoryMapper mapper) {
+        List<Category> cs = mapper.list();
+        for (Category c : cs) {
+            System.out.println(c.getName());
+        }
+    }
 }
