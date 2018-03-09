@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.how2java.mapper.CategoryMapper;
+import com.how2java.mapper.ProductMapper;
 import com.how2java.pojo.Category;
 import com.how2java.pojo.Order;
 import com.how2java.pojo.OrderItem;
@@ -24,7 +25,7 @@ public class TestMybatis {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession session = sqlSessionFactory.openSession();
-        CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+        ProductMapper mapper = session.getMapper(ProductMapper.class);
  
         listAll(mapper);
               
@@ -33,14 +34,10 @@ public class TestMybatis {
    
     }
   
-    private static void listAll(CategoryMapper mapper) {
-        List<Category> cs = mapper.list();
-        for (Category c : cs) {
-            System.out.println(c.getName());
-            List<Product> ps = c.getProducts();
-            for (Product p : ps) {
-                System.out.println("\t"+p.getName());
-            }
-        }
+    private static void listAll(ProductMapper mapper) {
+        List<Product> ps = mapper.list();
+        for (Product p : ps) {
+            System.out.println("\t"+p.getName() + "   " + p.getCategory().getName());
+        }    
     }
 }
