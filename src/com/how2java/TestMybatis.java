@@ -30,13 +30,13 @@ public class TestMybatis {
  
         CategoryMapper mapper = session.getMapper(CategoryMapper.class);
         
-        Category c1 = new Category();
-        c1.setName("category6");
-        mapper.add(c1);
+//        Category c1 = new Category();
+//        c1.setName("category6");
+//        mapper.add(c1);
         
-        Category c2 = new Category();
-        c2.setName("超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称");
-        mapper.add(c2);
+//        Category c2 = new Category();
+//        c2.setName("超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称");
+//        mapper.add(c2);
         
 //        mapper.delete(9);
  
