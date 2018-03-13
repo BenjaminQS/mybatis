@@ -28,26 +28,28 @@ public class TestMybatis {
         SqlSession session = sqlSessionFactory.openSession();
 //        ProductMapper mapper = session.getMapper(ProductMapper.class);
  
-        listOrder(session);
-              
+        CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+        
+        Category c1 = new Category();
+        c1.setName("category6");
+        mapper.add(c1);
+        
+        Category c2 = new Category();
+        c2.setName("超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称超过最大长度30的名称");
+        mapper.add(c2);
+        
+//        mapper.delete(9);
+ 
+        listAll(mapper);
         session.commit();
         session.close();
    
     }
   
-    private static void listOrder(SqlSession session) {
-    	OrderMapper mapper = session.getMapper(OrderMapper.class);
-    	List<Order> os = mapper.list();
-    	for (Order o:os){
-    		System.out.println(o.getCode());
-    		List<OrderItem> ois = o.getOrderItems();
-    		if(null != ois){
-    			for(OrderItem oi : ois) {
-    				System.out.format("\t%s\t%f\t%d%n", 
-    						oi.getProduct().getName(),oi.getProduct().getPrice(),oi.getNumber());
-    			}
-    		}
-    		
-    	}
+	private static void listAll(CategoryMapper mapper) {
+        List<Category> cs = mapper.list();
+        for (Category c : cs) {
+            System.out.println(c.getId() + ":" + c.getName());
+        }
     }
 }
